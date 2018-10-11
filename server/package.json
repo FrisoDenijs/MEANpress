@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "server of MEANpress",
   "scripts": {
-    "start": "nodemon",
+    "start": "ts-node src/index.ts",
     "build": "tsc -b",
     "dev": "npm install && nodemon src/index.ts"
   },
