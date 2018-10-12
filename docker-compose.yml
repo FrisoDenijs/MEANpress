@@ -1,6 +1,14 @@
 version: '3'
 services:
   server:
-    build: './server'
+    build: ./server
     ports:
-    - "8080:3000"
+    - '3000:3000'
+  # db:
+  #   build: mongo:4.1
+  #   ports:
+  #   - '27017:27017'
+  client:
+    build: ./client
+    ports:
+    - '4200:4200'
