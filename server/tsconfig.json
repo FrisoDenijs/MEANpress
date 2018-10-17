@@ -1,9 +1,13 @@
 {
     "compilerOptions": {
       "target": "es6",
+      "lib": ["es6", "dom"],
+      "types": ["reflect-metadata"],
       "module": "commonjs",
       "outDir": "dist",
-      "sourceMap": true
+      "sourceMap": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
     },
     "files": [
       "./node_modules/@types/node/index.d.ts"
