@@ -1,17 +1,15 @@
 import * as express from 'express';
 import * as bodyParser from "body-parser";
-import { IController, ControllerTypes } from './controllers';
+import { TestController } from './controllers';
 import { Container } from 'inversify';
 
 //based on https://blog.risingstack.com/building-a-node-js-app-with-typescript-tutorial/
 export class App {
     public express;
-    private _loginController: IController;
 
-    public constructor(controllerContainer: Container) {
+    public constructor() {
         this.express = express();
         this.mountRoutes();
-        this._loginController = controllerContainer.get<IController>(ControllerTypes.LOGIN_CONTROLLER);
     }
 
     private mountRoutes(): void {
@@ -23,16 +21,14 @@ export class App {
          
         this.express.use(bodyParser.json());
 
-        router.get('/', (req, res) => {
-            res.json({
-                message: 'Hello World!'
-            })
+        router.get('/test', (req, res) => {
+            res.json(TestController.Get());
         });
 
-        router.post('/login', (req, res) => {
-            this._loginController.post(req, res);
+        router.post('/test', (req, res) => {
+            res.json(TestController.Post(req.body));
         });
 
-        this.express.use('/', router);
+        this.express.use('/api', router);
     }
 }

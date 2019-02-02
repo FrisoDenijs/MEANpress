@@ -1,2 +1,1 @@
-export * from './controller.interface';
-export * from './controller.config';
+export * from './test.controller';
