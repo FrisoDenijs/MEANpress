@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "description": "server of MEANpress",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/server.ts",
     "build": "tsc -b",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/server.ts"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

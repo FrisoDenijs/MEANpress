@@ -8,17 +8,20 @@ export class App {
 
     public constructor() {
         this.express = express();
+        this.preRoutes();
         this.mountRoutes();
     }
 
-    private mountRoutes(): void {
-        const router = express.Router();
-
+    private preRoutes() {
         this.express.use(bodyParser.urlencoded({
             extended: false
          }));
          
         this.express.use(bodyParser.json());
+    }
+
+    private mountRoutes(): void {
+        const router = express.Router();
 
         router.get('/test', (req, res) => {
             res.json(TestController.Get());
