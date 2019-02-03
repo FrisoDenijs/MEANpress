@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from "body-parser";
-import { mountTestRoutes } from './routes/test.routes';
+import { mountTestRoutes } from './routes';
 
 const env = process.env.ENVIRONMENT || 'debug';
 
