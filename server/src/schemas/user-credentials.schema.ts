@@ -29,11 +29,11 @@ export var UserCredentialsSchema: Schema = new Schema({
 
 UserCredentialsSchema.methods.setPassword = function (password: string): void {
     randomBytes(saltLength, (err, buf) => {
-        //TODO: log error
+        console.error(err);
         this.salt = buf.toString();
-    })
+    });
     pbkdf2(password, this.salt, hashIterations, hashLength, digest, (err, derivedKey) => {
-        //TODO: log error
+        console.error(err);
         this.hashedPassword = derivedKey;
     });
 };
