@@ -6,18 +6,18 @@ const hashIterations = 8;
 const hashLength = 128;
 const digest = 'sha512';
 
-export interface IUser {
+export interface IUserCredentials {
     username: string;
-    password: string;
+    hashedPassword: string;
     salt: string;
 }
 
-export interface IUserModel extends IUser, Document {
-    validatePassword(username: string, password: string): boolean;
-    setPassword(username: string, password: string): void;
+export interface IUserCredentialsModel extends IUserCredentials, Document {
+    validatePassword(password: string): boolean;
+    setPassword(password: string): void;
 }
 
-export var UserSchema: Schema = new Schema({
+export var UserCredentialsSchema: Schema = new Schema({
     username: {
         type: String,
         lowercase: true,
@@ -27,22 +27,24 @@ export var UserSchema: Schema = new Schema({
     salt: String
 });
 
-UserSchema.methods.setPassword = function (password: string): void {
+UserCredentialsSchema.methods.setPassword = function (password: string): void {
     randomBytes(saltLength, (err, buf) => {
         //TODO: log error
-        this.salt = buf;
+        this.salt = buf.toString();
     })
     pbkdf2(password, this.salt, hashIterations, hashLength, digest, (err, derivedKey) => {
         //TODO: log error
-        this.password = derivedKey;
+        this.hashedPassword = derivedKey;
     });
 };
 
-UserSchema.methods.validatePassword = function (password: string): boolean {
+UserCredentialsSchema.methods.validatePassword = function (password: string): boolean {
     let hash: any;
     pbkdf2(password, this.salt, hashIterations, hashLength, digest, (err, derivedKey) => {
         //TODO: log error
         hash = derivedKey;
     });
-    return this.password === hash;
+    return this.hashedPassword === hash;
 }
+
+export const UserCredentials: Model<IUserCredentialsModel> = model<IUserCredentialsModel>("UserCredentials", UserCredentialsSchema);
